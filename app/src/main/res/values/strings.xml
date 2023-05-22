@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Project</string>
+    <string name="aboutPage">
+        Välkommen till vår "Om oss"-sida! Vi är ett företag som ägnar oss åt att skapa unika
+        och fantasifulla bilar. Varje modell i vår samling har noggrant utformats med omsorg
+        och kreativitet för att erbjuda en oförglömlig upplevelse. Vi strävar efter att
+        kombinera stil, prestanda och innovation för att skapa bilar som sticker ut från
+        mängden. Besök vår hemsida för att utforska våra spännande bilmodeller och upptäcka
+        deras unika egenskaper, inklusive bilnamn, biltyp, färg, antal dörrar och hastighet.
+        Vi är stolta över att erbjuda en fantasivärld av bilar som väcker drömmar och
+        inspirerar till äventyr på vägarna.
+    </string>
 </resources>
