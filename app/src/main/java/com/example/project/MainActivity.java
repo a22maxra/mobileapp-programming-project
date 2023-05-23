@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
             @Override
             public void onClick(Car item) {
-                Toast.makeText(MainActivity.this, item.getCar(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DetailView.class);
+                intent.putExtra("details", item.getCar());
+                startActivity(intent);
             }
         });
         RecyclerView view = findViewById(R.id.displayCars);
