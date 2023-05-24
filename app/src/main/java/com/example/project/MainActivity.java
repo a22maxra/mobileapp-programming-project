@@ -1,6 +1,8 @@
 package com.example.project;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private RecyclerViewAdapter adapter;
     private ArrayList<Car> items;
     private Gson gson = new Gson();
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        preferences = getSharedPreferences("SortingPrefs", Context.MODE_PRIVATE);
+        editor = preferences.edit();
 
         adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
             @Override
@@ -65,16 +72,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         buttonAsc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort the items list by name ascending
-                Collections.sort(items, new Comparator<Car>() {
-                    @Override
-                    public int compare(Car car1, Car car2) {
-                        return car1.getName().compareTo(car2.getName());
-                    }
-                });
+                sortAsc();
 
-                // Notify the adapter of the data change
-                adapter.notifyDataSetChanged();
+                editor.putString("sortOrder", "ASC");
+                editor.apply();
             }
         });
 
@@ -82,16 +83,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         buttonDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort the items list by name descending
-                Collections.sort(items, new Comparator<Car>() {
-                    @Override
-                    public int compare(Car car1, Car car2) {
-                        return car2.getName().compareTo(car1.getName());
-                    }
-                });
+                sortDesc();
 
-                // Notify the adapter of the data change
-                adapter.notifyDataSetChanged();
+                editor.putString("sortOrder", "DESC");
+                editor.apply();
             }
         });
 
@@ -101,9 +96,11 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             @Override
             public void onClick(View v) {
                 new JsonTask(MainActivity.this).execute("https://mobprog.webug.se/json-api?login=a22maxra");
+
+                editor.putString("sortOrder", "Default");
+                editor.apply();
             }
         });
-
     }
 
     @Override
@@ -115,5 +112,39 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         adapter.setItems(items);
         adapter.notifyDataSetChanged();
+
+        // Retrieve sorting preference
+        String sortOrder = preferences.getString("sortOrder", "Default");
+
+        if (sortOrder.equals("ASC")) {
+            sortAsc();
+        } else if (sortOrder.equals("DESC")) {
+            sortDesc();
+        }
+    }
+
+    public void sortAsc(){
+        Collections.sort(items, new Comparator<Car>() {
+            @Override
+            public int compare(Car car1, Car car2) {
+                return car1.getName().compareTo(car2.getName());
+            }
+        });
+        // Notify the adapter of the data change
+        adapter.notifyDataSetChanged();
+    }
+
+    public void sortDesc(){
+        // Sort the items list by name descending
+        Collections.sort(items, new Comparator<Car>() {
+            @Override
+            public int compare(Car car1, Car car2) {
+                return car2.getName().compareTo(car1.getName());
+            }
+        });
+
+        // Notify the adapter of the data change
+        adapter.notifyDataSetChanged();
     }
 }
+
