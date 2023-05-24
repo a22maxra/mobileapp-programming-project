@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private RecyclerViewAdapter adapter;
     private ArrayList<Car> items;
     private Gson gson = new Gson();
-    //private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a22maxra";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

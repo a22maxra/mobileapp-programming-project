@@ -15,7 +15,6 @@ public class DetailView extends AppCompatActivity {
 
         detailsCar = findViewById(R.id.detailsCar);
 
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String name = extras.getString("details");

@@ -23,6 +23,29 @@ public class Car {
         this.doors = doors;
     }
 
+    public java.lang.String getLicensplate() {
+        return licensplate;
+    }
+
+    public java.lang.String getName() {
+        return name;
+    }
+
+    public java.lang.String getSpeed() {
+        return speed;
+    }
+
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    public java.lang.String getCategory() {
+        return category;
+    }
+
+    public java.lang.String getDoors() {
+        return doors;
+    }
     public String getCar() {
         return "Licensplate: " + licensplate +
                 "\nName: " + name +

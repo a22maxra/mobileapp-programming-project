@@ -31,7 +31,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.car.setText(items.get(position).getCar());
+        holder.car.setText(items.get(position).getName());
+        holder.category.setText(items.get(position).getCategory());
     }
 
     @Override
@@ -44,11 +45,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView car;
+        TextView category;
 
         ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             car = itemView.findViewById(R.id.car);
+            category = itemView.findViewById(R.id.category);
         }
 
         @Override
